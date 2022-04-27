@@ -23,6 +23,7 @@ import androidx.core.view.NestedScrollingParentHelper
 import androidx.core.view.ViewCompat
 import com.airbnb.lottie.LottieDrawable
 import kotlin.math.abs
+import kotlin.properties.Delegates
 
 class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
     ViewGroup(context, attrs), NestedScrollingParent, NestedScrollingChild {
@@ -60,6 +61,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
     private var mAnimateToRefreshDuration = DEFAULT_ANIMATE_DURATION
     private val mTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
     private val mRefreshViewSize: Int
+    private var prevX: Float by Delegates.notNull<Float>()
 
     // Whether the client has set a custom refreshing position
     private var mUsingCustomRefreshTargetOffset = false
@@ -657,6 +659,8 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
         }
         when (ev.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                prevX = ev.x
+
                 mActivePointerId = ev.getPointerId(0)
                 mIsBeingDragged = false
                 val initialDownY = getMotionEventY(ev, mActivePointerId)
@@ -673,6 +677,13 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
                 mDispatchTargetTouchDown = false
             }
             MotionEvent.ACTION_MOVE -> {
+                val eventX = ev.x
+                val diffX = abs(eventX - prevX)
+
+                if(diffX > mTouchSlop) {
+                    return false
+                }
+
                 if (mActivePointerId == INVALID_POINTER) {
                     return false
                 }
