@@ -52,10 +52,7 @@ class MainActivity : AppCompatActivity() {
         // set number of times the animation repeats
         ssPullRefresh.setRepeatCount(SSPullToRefreshLayout.RepeatCount.INFINITE)
         //set style of RefreshLayout : NORMAL, FLOAT, PINNED
-        ssPullRefresh.setRefreshStyle(SSPullToRefreshLayout.RefreshStyle.NORMAL)
-
-        ssPullRefresh.setRefreshInitialOffset(100f)
-        ssPullRefresh.setRefreshStyle(SSPullToRefreshLayout.RefreshStyle.FLOAT)
+        ssPullRefresh.setRefreshStyle(SSPullToRefreshLayout.RefreshStyle.PINNED)
     }
 
     private fun setUpRecyclerView() {

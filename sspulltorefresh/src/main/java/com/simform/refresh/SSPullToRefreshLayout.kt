@@ -5,7 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
+//import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -547,14 +547,14 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
         try {
             mTarget!!.layout(targetLeft, targetTop, targetRight, targetBottom)
         } catch (ignored: Exception) {
-            Log.e(logTag, "error: ignored=" + ignored.toString() + " " + ignored.stackTrace.toString())
+//            Log.e(logTag, "error: ignored=" + ignored.toString() + " " + ignored.stackTrace.toString())
         }
         val refreshViewLeft = (width - mRefreshView.measuredWidth) / 2
         val refreshViewTop = reviseRefreshViewLayoutTop(mRefreshInitialOffset.toInt())
         val refreshViewRight = (width + mRefreshView.measuredWidth) / 2
         val refreshViewBottom = refreshViewTop + mRefreshView.measuredHeight
         mRefreshView.layout(refreshViewLeft, refreshViewTop, refreshViewRight, refreshViewBottom)
-        Log.i(logTag, "onLayout: $left : $top : $right : $bottom")
+//        Log.i(logTag, "onLayout: $left : $top : $right : $bottom")
     }
 
     private fun reviseTargetLayoutTop(layoutTop: Int): Int {
@@ -739,11 +739,11 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
                     overScrollY = targetOrRefreshViewTop.toFloat()
                     mInitialMotionY = activeMoveY
                     mInitialScrollY = overScrollY
-                    Log.i(logTag, "animateToStart overscrollY $overScrollY -- $mInitialMotionY"
-                    )
+//                    Log.i(logTag, "animateToStart overscrollY $overScrollY -- $mInitialMotionY"
+//                    )
                 } else {
                     overScrollY = activeMoveY - mInitialMotionY + mInitialScrollY
-                    Log.i(logTag, "overscrollY $overScrollY --$mInitialMotionY -- $mInitialScrollY")
+//                    Log.i(logTag, "overscrollY $overScrollY --$mInitialMotionY -- $mInitialScrollY")
                 }
                 if (mIsRefreshing) {
                     //note: float style will not come here
@@ -764,7 +764,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
                             mTarget!!.dispatchTouchEvent(obtain)
                         }
                     }
-                    Log.i(logTag, "moveSpinner refreshing -- " + mInitialScrollY + " -- " + (activeMoveY - mInitialMotionY))
+//                    Log.i(logTag, "moveSpinner refreshing -- " + mInitialScrollY + " -- " + (activeMoveY - mInitialMotionY))
                     moveSpinner(overScrollY)
                 } else {
                     if (mIsBeingDragged) {
@@ -885,7 +885,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
     }
 
     private fun computeAnimateToRefreshingDuration(from: Float): Int {
-        Log.i(logTag, "from -- refreshing $from")
+//        Log.i(logTag, "from -- refreshing $from")
         if (from < mRefreshInitialOffset) {
             return 0
         }
@@ -896,7 +896,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
     }
 
     private fun computeAnimateToStartDuration(from: Float): Int {
-        Log.i(logTag, "from -- start $from")
+//        Log.i(logTag, "from -- start $from")
         if (from < mRefreshInitialOffset) {
             return 0
         }
@@ -946,9 +946,9 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
                 (mRefreshView as RefreshCallbacks).releaseToRefresh()
             }
         }
-        Log.i(logTag,
-            ("$targetOrRefreshViewOffsetY -- $refreshTargetOffset -- $convertScrollOffset -- $mTargetOrRefreshViewOffsetY -- $mRefreshTargetOffset")
-        )
+//        Log.i(logTag,
+//            ("$targetOrRefreshViewOffsetY -- $refreshTargetOffset -- $convertScrollOffset -- $mTargetOrRefreshViewOffsetY -- $mRefreshTargetOffset")
+//        )
         setTargetOrRefreshViewOffsetY((convertScrollOffset - mTargetOrRefreshViewOffsetY).toInt())
     }
 
@@ -969,7 +969,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
         val index: Int = ev.actionIndex
         mActivePointerId = ev.getPointerId(index)
         mInitialMotionY = getMotionEventY(ev, mActivePointerId) - mCurrentTouchOffsetY
-        Log.i(logTag, " onDown $mInitialMotionY")
+//        Log.i(logTag, " onDown $mInitialMotionY")
     }
 
     private fun onSecondaryPointerUp(ev: MotionEvent) {
@@ -980,7 +980,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
             mActivePointerId = ev.getPointerId(newPointerIndex)
         }
         mInitialMotionY = getMotionEventY(ev, mActivePointerId) - mCurrentTouchOffsetY
-        Log.i(logTag, " onUp $mInitialMotionY")
+//        Log.i(logTag, " onUp $mInitialMotionY")
     }
 
     private fun setTargetOrRefreshViewOffsetY(offsetY: Int) {
@@ -1002,7 +1002,7 @@ class SSPullToRefreshLayout(context: Context?, attrs: AttributeSet? = null) :
                 mTarget!!.top.toFloat()
             }
         }
-        Log.i(logTag, "current offset$mTargetOrRefreshViewOffsetY")
+//        Log.i(logTag, "current offset$mTargetOrRefreshViewOffsetY")
         when (mRefreshStyle) {
             RefreshStyle.FLOAT -> (mRefreshView as RefreshCallbacks).pullProgress(
                 mTargetOrRefreshViewOffsetY,
